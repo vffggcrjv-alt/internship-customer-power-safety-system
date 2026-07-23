@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="电力运维维修管理系统项目介绍：从故障发现、智能派单到现场闭环与报告归档。">
+  <title>电力运维维修管理系统｜项目介绍</title>
+  <style>
+    :root {
+      --title: #1b2733;
+      --body: #465564;
+      --note: #778795;
+      --navy: #0a3156;
+      --navy-mid: #104a76;
+      --blue: #175f91;
+      --cyan-blue: #5c8ca3;
+      --line: #d7e0e6;
+      --soft: #f4f7f9;
+      --paper: #ffffff;
+      --soft-blue: #eef4f7;
+      --soft-blue-2: #f3f7f9;
+      --white-soft: #f1f5f7;
+      --shadow: 0 9px 24px rgba(22, 54, 78, .08);
+      --shadow-hover: 0 13px 28px rgba(22, 54, 78, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--body);
+      background: var(--soft);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.8;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .notice {
+      color: #586b78;
+      background: #edf3f5;
+      border-bottom: 1px solid #d3e0e5;
+      font-size: 13px;
+    }
+    .notice .wrap { padding: 10px 0; display: flex; align-items: center; gap: 10px; }
+    .notice .wrap::before { content: "!"; width: 17px; height: 17px; display: grid; place-items: center; flex: 0 0 auto; color: #3f667e; border: 1px solid #6e91a5; border-radius: 50%; font-family: Georgia, serif; font-weight: 700; line-height: 1; }
+    .notice strong { white-space: nowrap; }
+    .site-header { position: absolute; top: 0; right: 0; left: 0; z-index: 10; background: rgba(4, 32, 57, .72); border-bottom: 1px solid rgba(125, 183, 207, .34); box-shadow: 0 3px 12px rgba(0, 16, 32, .14); }
+    .site-header .wrap { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 11px; color: #eef7fa; font-weight: 700; letter-spacing: .05em; }
+    .brand-mark {
+      width: 34px; height: 34px; display: grid; place-items: center; border-radius: 7px;
+      background: linear-gradient(135deg, #164f79, #0c3b64); color: var(--white-soft); font-size: 18px;
+      box-shadow: 0 4px 9px rgba(12, 50, 78, .15);
+    }
+    nav { display: flex; height: 72px; gap: 28px; color: #d4e3e9; font-size: 14px; }
+    nav a { position: relative; display: flex; align-items: center; padding: 1px 0 0; }
+    nav a::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: var(--blue); transform: scaleX(0); transform-origin: center; transition: transform .2s ease; }
+    nav a:hover, nav a.is-active { color: #f0f8fa; font-weight: 700; }
+    nav a:hover::after, nav a.is-active::after { transform: scaleX(1); }
+    .hero {
+      position: relative; overflow: hidden; color: var(--white-soft);
+      background: radial-gradient(circle at 72% 38%, rgba(22, 124, 155, .23), transparent 31%), linear-gradient(112deg, #041d37 0%, #06355b 53%, #07516e 100%);
+    }
+    .hero::before, .hero::after, .flow-section::before, .flow-section::after { content: ""; position: absolute; pointer-events: none; }
+    .hero::before, .flow-section::before { inset: 0; opacity: .12; background-image: linear-gradient(rgba(131, 204, 224, .5) 1px, transparent 1px), linear-gradient(90deg, rgba(131, 204, 224, .5) 1px, transparent 1px); background-size: 27px 27px; }
+    .hero::after, .flow-section::after { width: 100%; height: 100%; right: 0; top: 0; opacity: .16; background: linear-gradient(90deg, transparent 2%, rgba(113, 192, 211, .42) 2.15%, transparent 2.3%) 0 0 / 242px 100%, linear-gradient(140deg, transparent 0 47%, rgba(111, 186, 204, .44) 47.1% 47.25%, transparent 47.4%) 0 0 / 260px 175px; }
+    .hero-inner { position: relative; z-index: 1; min-height: 525px; padding: 132px 0 52px; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 54px; }
+    .eyebrow { margin: 0 0 15px; color: #62d1df; font-size: 12px; font-weight: 700; letter-spacing: .2em; }
+    h1 { margin: 0; max-width: 650px; color: #f1f7f8; font-size: clamp(42px, 5vw, 64px); font-weight: 700; line-height: 1.23; letter-spacing: .035em; text-shadow: 0 2px 8px rgba(0, 20, 38, .28); }
+    .hero-copy { max-width: 570px; margin: 24px 0 31px; color: #c8dce3; font-size: 15px; line-height: 2; }
+    .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 43px; padding: 0 21px; border: 1px solid rgba(205,224,232,.32); border-radius: 8px; color: var(--white-soft); font-size: 14px; font-weight: 700; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+    .button:hover { transform: translateY(-1px); box-shadow: 0 5px 12px rgba(0, 20, 36, .14); }
+    .button.primary { min-height: 47px; padding: 0 27px; background: linear-gradient(135deg, #09698b, #14a0b8); border-color: #60d4e1; color: #f2f6f7; }
+    .button.primary:hover { background: linear-gradient(135deg, #0c426d, #155d82); }
+    .button.ghost { min-height: 41px; color: #d4e1e6; background: rgba(255,255,255,.07); border-color: rgba(194,216,225,.37); }
+    .hero-panel { position: relative; padding: 35px 24px 23px; border: 1px solid rgba(104, 224, 235, .79); border-radius: 8px; background: linear-gradient(145deg, rgba(12, 74, 103, .76), rgba(6, 49, 81, .78)); box-shadow: inset 0 0 0 5px rgba(16, 118, 143, .15), inset 0 1px 0 rgba(222, 252, 255, .13), 0 10px 24px rgba(0, 16, 34, .2); }
+    .hero-panel::before { content: "双端协同 · 全程可追溯"; position: absolute; top: -13px; left: 50%; min-width: 194px; padding: 3px 18px; border: 1px solid rgba(103, 225, 236, .75); border-radius: 3px; color: #c8f7f8; background: #0a526f; font-size: 13px; font-weight: 700; text-align: center; letter-spacing: .08em; transform: translateX(-50%); }
+    .panel-label { margin: 0 0 15px; color: #9ee5eb; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+    .collab-map { display: grid; grid-template-columns: minmax(0, 1fr) 118px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 250px; }
+    .collab-side { display: grid; gap: 13px; }
+    .collab-card { min-height: 99px; padding: 14px; border: 1px solid rgba(114, 223, 234, .6); border-radius: 8px; background: linear-gradient(145deg, rgba(40, 113, 140, .52), rgba(17, 72, 106, .55)); box-shadow: inset 0 -10px 18px rgba(5, 61, 85, .13); }
+    .collab-card .collab-icon { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid #79dbe4; border-radius: 5px; color: #d9f6f7; background: rgba(6, 63, 91, .56); font-size: 14px; }
+    .collab-card h3 { margin: 9px 0 3px; color: #eefafb; font-size: 14px; line-height: 1.35; }
+    .collab-card p { margin: 0; color: #b4d8e1; font-size: 10px; line-height: 1.55; }
+    .collab-core { min-height: 172px; display: grid; place-items: center; padding: 18px 10px; border: 1px solid rgba(117, 231, 239, .78); border-radius: 8px; background: rgba(6, 65, 94, .58); text-align: center; }
+    .collab-core b { display: block; color: #e8f9fa; font-size: 16px; line-height: 1.45; white-space: nowrap; }
+    .collab-core span { display: block; margin-top: 10px; color: #9cd8df; font-size: 10px; line-height: 1.65; }
+    .collab-core i { display: block; width: 42px; height: 2px; margin: 13px auto 0; background: #67dbe1; }
+    section { padding: 86px 0; }
+    .section-head { max-width: 800px; margin-bottom: 38px; }
+    .kicker { margin: 0 0 10px; color: var(--blue); font-size: 12px; font-weight: 700; letter-spacing: .16em; }
+    h2 { position: relative; margin: 0; padding-left: 15px; color: var(--title); font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; line-height: 1.35; letter-spacing: .02em; }
+    h2::before { content: ""; position: absolute; top: .18em; bottom: .18em; left: 0; width: 4px; background: var(--blue); }
+    .section-head > p:last-child { margin: 15px 0 0; color: var(--body); }
+    .value-grid, .feature-grid, .tech-grid { display: grid; gap: 18px; }
+    .value-grid { grid-template-columns: repeat(3, 1fr); }
+    .value-card, .feature-card, .tech-card { border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
+    .value-card:hover, .feature-card:hover, .tech-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .value-card { padding: 30px 28px; background: var(--soft-blue); }
+    .value-card:nth-child(2) { background: #f1f6f8; }
+    .value-card:nth-child(3) { background: var(--soft-blue-2); }
+    .value-card .icon { width: 51px; height: 51px; display: grid; place-items: center; border: 1px solid #c7dbe5; border-radius: 50%; color: #245f86; background: linear-gradient(145deg, #e9f2f6, #dcebf2); font-size: 23px; }
+    .value-card h3, .feature-card h3, .tech-card h3 { margin: 20px 0 9px; color: var(--title); font-size: 19px; }
+    .value-card p, .feature-card p, .tech-card p { margin: 0; color: var(--body); font-size: 14px; }
+    .flow-section { position: relative; overflow: hidden; color: var(--white-soft); background: linear-gradient(120deg, #0a3156, #104a70); }
+    .flow-section > .wrap { position: relative; z-index: 1; }
+    .flow-section .kicker { color: #aac5d0; }
+    .flow-section h2 { color: var(--white-soft); }
+    .flow-section h2::before { background: #6d9db2; }
+    .flow-section .section-head > p:last-child { color: #cad9df; }
+    .journey { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; overflow: visible; }
+    .journey-step { position: relative; min-height: 206px; padding: 24px 19px; border: 1px solid rgba(193,217,226,.28); border-radius: 9px; background: rgba(229,240,244,.075); backdrop-filter: blur(3px); }
+    .journey-step:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -14px; z-index: 1; width: 14px; border-top: 1px solid #79a6b9; }
+    .journey-num { color: #a8c8d4; font-size: 12px; font-weight: 700; letter-spacing: .11em; }
+    .journey-step h3 { margin: 16px 0 9px; color: var(--white-soft); font-size: 18px; }
+    .journey-step p { margin: 0; color: #cddbe1; font-size: 13px; line-height: 1.75; }
+    .feature-grid { grid-template-columns: repeat(3, 1fr); }
+    .feature-card { padding: 25px; background: var(--paper); }
+    .feature-card .num { color: #6d94aa; font-family: Georgia, serif; font-size: 23px; }
+    .feature-card h3 { margin-top: 7px; }
+    .architecture { display: grid; grid-template-columns: .9fr 1.2fr .9fr; align-items: stretch; gap: 18px; }
+    .arch-col { display: grid; gap: 12px; }
+    .arch-node { padding: 20px 18px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); box-shadow: 0 5px 15px rgba(22, 54, 78, .045); }
+    .arch-node b { display: block; margin-bottom: 5px; color: var(--navy); font-size: 16px; }
+    .arch-node small { color: var(--body); font-size: 13px; }
+    .arch-core { display: grid; place-items: center; min-height: 100%; padding: 30px; border: 1px solid #2b648a; border-radius: 10px; color: var(--white-soft); background: linear-gradient(145deg, #164e76, #0d3a61); box-shadow: var(--shadow); text-align: left; }
+    .arch-core strong { display: block; margin-bottom: 8px; font-size: 24px; }
+    .arch-core span { display: block; max-width: 250px; color: #cddce2; font-size: 13px; }
+    .arch-hint { margin: 18px 0 0; color: var(--note); font-size: 14px; text-align: left; }
+    .tech-grid { grid-template-columns: repeat(4, 1fr); }
+    .tech-card { padding: 22px; background: var(--soft-blue-2); }
+    .tech-card h3 { margin-top: 0; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .tag { padding: 3px 8px; color: #466a7f; background: #e7eff3; border: 1px solid #d1e0e6; border-radius: 99px; font-size: 12px; }
+    .security { background: #f1f5f7; border-top: 1px solid #dce5e9; border-bottom: 1px solid #dce5e9; }
+    .security-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 38px; align-items: center; }
+    .check-list { display: grid; gap: 11px; margin-top: 24px; }
+    .check-list div { padding-left: 29px; position: relative; color: var(--body); }
+    .check-list div::before { content: "✓"; position: absolute; left: 0; top: 1px; color: #3d7894; font-weight: 700; }
+    .scope-card { padding: 28px; color: var(--white-soft); border: 1px solid #2a5f7f; border-radius: 10px; background: linear-gradient(145deg, #123f66, #0b355a); box-shadow: var(--shadow); }
+    .scope-card h3 { margin: 0 0 15px; font-size: 22px; }
+    .scope-row { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-top: 1px solid rgba(218,234,239,.17); color: #cbdbe1; font-size: 14px; }
+    .scope-row b { color: var(--white-soft); }
+    .shots { background: #fff; }
+    .shot-note { margin: -18px 0 30px; padding: 13px 16px; color: #566975; background: #f0f5f7; border: 1px solid #d7e3e8; border-left: 4px solid #5d8ea6; border-radius: 6px; font-size: 14px; }
+    .demo-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .demo-tab { position: relative; min-height: 47px; padding: 0 20px; border: 0; background: transparent; color: var(--note); font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+    .demo-tab::after { content: ""; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; background: var(--blue); transform: scaleX(0); transition: transform .2s ease; }
+    .demo-tab:hover, .demo-tab.is-active { color: var(--navy); }
+    .demo-tab.is-active::after { transform: scaleX(1); }
+    .demo-panel { display: none; }
+    .demo-panel.is-active { display: block; }
+    .demo-stage { display: grid; grid-template-columns: minmax(0, 1fr) 316px; gap: 24px; align-items: stretch; }
+    .demo-visual { position: relative; min-height: 470px; display: grid; place-items: center; padding: 24px 62px; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: #edf3f6; box-shadow: var(--shadow); }
+    .demo-visual::before { content: ""; position: absolute; inset: 0; opacity: .45; background-image: linear-gradient(rgba(118,149,166,.11) 1px, transparent 1px), linear-gradient(90deg, rgba(118,149,166,.11) 1px, transparent 1px); background-size: 38px 38px; }
+    .demo-visual img { position: relative; z-index: 1; display: block; max-width: 100%; max-height: 520px; width: auto; height: auto; border: 1px solid #cfdbe1; border-radius: 6px; background: #fff; box-shadow: 0 12px 25px rgba(24, 53, 74, .14); }
+    .demo-panel[data-platform="mini"] .demo-visual { background: #f2f5f7; }
+    .demo-panel[data-platform="mini"] .demo-visual img { max-height: 600px; }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image { display: block; height: 600px; min-height: 600px; padding: 0 44px; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; scrollbar-color: #7c9eaf #dfe8ed; scrollbar-width: thin; }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image::before { position: fixed; opacity: .28; }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image img { display: block; width: min(100%, 360px); max-width: none; max-height: none; height: auto; margin: 18px auto; }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image .slide-arrow { position: sticky; top: calc(50% - 28px); }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image .slide-arrow.prev { float: left; margin-left: -37px; }
+    .demo-panel[data-platform="mini"] .demo-visual.is-long-image .slide-arrow.next { float: right; margin-right: -37px; }
+    .slide-arrow { position: absolute; z-index: 2; top: 50%; width: 36px; height: 56px; display: grid; place-items: center; padding: 0; border: 1px solid #c5d5dd; border-radius: 6px; color: #315a72; background: rgba(250,252,253,.91); font-size: 25px; line-height: 1; cursor: pointer; transform: translateY(-50%); transition: background .2s ease, box-shadow .2s ease; }
+    .slide-arrow:hover { background: #fff; box-shadow: 0 5px 12px rgba(24,53,74,.12); }
+    .slide-arrow:disabled { opacity: .38; cursor: not-allowed; box-shadow: none; }
+    .slide-arrow.prev { left: 15px; }
+    .slide-arrow.next { right: 15px; }
+    .demo-info { display: flex; flex-direction: column; justify-content: center; padding: 28px 26px; border: 1px solid var(--line); border-radius: 10px; background: #f8fafb; box-shadow: var(--shadow); }
+    .demo-count { margin: 0 0 12px; color: #66869a; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+    .demo-info h3 { position: relative; margin: 0; padding-left: 12px; color: var(--title); font-size: 23px; line-height: 1.45; }
+    .demo-info h3::before { content: ""; position: absolute; top: .24em; bottom: .24em; left: 0; width: 3px; background: var(--blue); }
+    .demo-info p { margin: 17px 0 0; color: var(--body); font-size: 14px; }
+    .demo-points { display: grid; gap: 10px; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); }
+    .demo-points div { position: relative; padding-left: 17px; color: #5c6f7c; font-size: 13px; }
+    .demo-points div::before { content: ""; position: absolute; top: .67em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: #5c8da5; }
+    .demo-progress { display: flex; gap: 6px; margin: 22px 0 0; }
+    .demo-progress button { width: 22px; height: 3px; padding: 0; border: 0; border-radius: 2px; background: #cbd9df; cursor: pointer; }
+    .demo-progress button.is-active { background: var(--blue); }
+    .closing { position: relative; overflow: hidden; text-align: left; color: var(--white-soft); background: linear-gradient(125deg, #0a3156, #104b70); }
+    .closing .wrap { position: relative; z-index: 1; }
+    .closing h2 { max-width: 790px; color: var(--white-soft); }
+    .closing h2::before { background: #74a0b4; }
+    .closing p { max-width: 720px; margin: 17px 0 0; color: #ccdade; }
+    footer { padding: 23px 0; color: var(--note); background: #edf2f4; font-size: 13px; text-align: center; }
+    @media (max-width: 900px) {
+      .hero-inner, .security-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-inner { min-height: auto; padding: 112px 0 58px; }
+      .value-grid, .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .journey { grid-template-columns: 1fr; gap: 12px; }
+      .journey-step { min-height: 0; }
+      .journey-step:not(:last-child)::after { top: auto; bottom: -13px; left: 24px; right: auto; width: 1px; height: 13px; border-top: 0; border-left: 1px solid #79a6b9; }
+      .architecture { grid-template-columns: 1fr; }
+      .arch-core { min-height: 145px; }
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .demo-stage { grid-template-columns: 1fr; }
+      .demo-visual { min-height: 420px; }
+      .collab-card { min-height: 108px; }
+    }
+    @media (max-width: 580px) {
+      .wrap { width: min(100% - 30px, 1160px); }
+      nav { display: none; }
+      .notice .wrap { align-items: flex-start; }
+      .value-grid, .feature-grid, .tech-grid { grid-template-columns: 1fr; }
+      section { padding: 55px 0; }
+      .demo-tabs { gap: 0; }
+      .demo-tab { flex: 1; padding: 0 8px; font-size: 14px; }
+      .demo-visual { min-height: 330px; padding: 18px 45px; }
+      .demo-visual img { max-height: 450px; }
+      .demo-panel[data-platform="mini"] .demo-visual.is-long-image { height: 470px; min-height: 470px; }
+      .slide-arrow { width: 30px; height: 46px; font-size: 21px; }
+      .slide-arrow.prev { left: 8px; }
+      .slide-arrow.next { right: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="notice" aria-label="数据与授权说明">
+    <div class="wrap"><strong>数据与授权说明</strong><span>本页截图中的业务数值、人员及工单信息均为测试/演示数据，并非真实生产数据；页面所涉公开数据已取得公司授权后使用。</span></div>
+  </aside>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="返回页首"><span class="brand-mark">⚡</span><span>电力运维维修管理系统</span></a>
+      <nav aria-label="页面导航"><a href="#ability" class="is-active">核心能力</a><a href="#workflow">业务闭环</a><a href="#architecture">技术实现</a><a href="#screenshots">界面展示</a></nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div>
+          <p class="eyebrow">POWER OPERATIONS · DIGITAL CLOSED LOOP</p>
+          <h1>让每一次现场处置，都有迹可循、可审可溯</h1>
+          <p class="hero-copy">面向电力设备运维场景打造的数字化协同平台，将故障受理、智能派单、现场签到、维修执行、审核签章与报告归档，连接为一条可管理、可追溯的闭环。</p>
+          <div class="hero-actions"><a class="button primary" href="#screenshots">查看系统界面</a><a class="button ghost" href="#workflow">了解业务闭环</a></div>
+        </div>
+        <aside class="hero-panel" aria-label="双端协同架构">
+          <p class="panel-label">ONE PLATFORM · DUAL-END COLLABORATION</p>
+          <div class="collab-map">
+            <div class="collab-side">
+              <article class="collab-card"><div class="collab-icon">⌖</div><h3>现场小程序</h3><p>扫码签到、表单填报、维修记录与电子签名</p></article>
+              <article class="collab-card"><div class="collab-icon">▣</div><h3>设备点位</h3><p>一物一码建档，关联位置、状态与历史工单</p></article>
+            </div>
+            <div class="collab-core"><div><b>业务协同<br>中枢</b><span>身份权限 · 工单流转<br>签名归档 · 数据服务</span><i></i></div></div>
+            <div class="collab-side">
+              <article class="collab-card"><div class="collab-icon">▤</div><h3>管理工作台</h3><p>地图总览、故障派单、审核签章与统计分析</p></article>
+              <article class="collab-card"><div class="collab-icon">▧</div><h3>过程归档</h3><p>照片、签名、报告和维修记录全程可回溯</p></article>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="ability">
+      <div class="wrap">
+        <div class="section-head"><p class="kicker">为什么值得关注</p><h2>把分散的现场信息，沉淀为可执行的运维流程</h2><p>系统围绕“人、设备、位置、工单”四类关键对象设计，让管理人员看得见现场，让维修人员少跑冤枉路，让每次处置都留下可信凭证。</p></div>
+        <div class="value-grid">
+          <article class="value-card"><div class="icon">◎</div><h3>设备一物一码</h3><p>在地图完成设备点位建档、地址定位与二维码生成，设备身份、位置和历史记录可快速关联。</p></article>
+          <article class="value-card"><div class="icon">⌖</div><h3>现场位置校验</h3><p>维修人员扫码签到时校验与设备点位的距离，记录时间、位置与距离信息，减少非现场操作。</p></article>
+          <article class="value-card"><div class="icon">↗</div><h3>智能就近派单</h3><p>综合人员在线状态、定位新鲜度、在办工单与距离筛选可派人员，让故障响应更有依据。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow-section" id="workflow">
+      <div class="wrap">
+        <div class="section-head"><p class="kicker">全流程闭环</p><h2>从故障到归档，一张工单贯穿现场</h2><p>让每个流转节点都有明确状态，让管理动作与现场凭证自然衔接。</p></div>
+        <div class="journey" aria-label="工单处理流程">
+          <article class="journey-step"><div class="journey-num">STEP 01</div><h3>故障创建</h3><p>关联设备点位，完成故障描述与高、中、低等级标记。</p></article>
+          <article class="journey-step"><div class="journey-num">STEP 02</div><h3>自动/人工派单</h3><p>优先选择在线、定位有效且无活跃工单的就近人员。</p></article>
+          <article class="journey-step"><div class="journey-num">STEP 03</div><h3>扫码到场作业</h3><p>小程序扫码签到，填写处置方案、检查项并上传现场照片。</p></article>
+          <article class="journey-step"><div class="journey-num">STEP 04</div><h3>审核与签字</h3><p>管理端审核通过或驳回；维修人员、管理员依次完成电子签名。</p></article>
+          <article class="journey-step"><div class="journey-num">STEP 05</div><h3>报告生成归档</h3><p>汇集工单、照片、签名和记录，自动生成维修报告并留存历史档案。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><p class="kicker">面向实际运维</p><h2>现场端好用，管理端看得清</h2><p>微信小程序服务于到场、填报和签名；Web 管理后台服务于调度、地图化总览、审核、统计与档案管理。</p></div>
+        <div class="feature-grid">
+          <article class="feature-card"><div class="num">01</div><h3>地图化点位总览</h3><p>基于地图展示设备点位、状态标识与在线人员位置；支持地图选点、地址搜索与经纬度反查。</p></article>
+          <article class="feature-card"><div class="num">02</div><h3>维修工单精细化流转</h3><p>覆盖待派单、已派单、处理中、待审核、待签名、已完成等状态，支持驳回重修、撤销与重派。</p></article>
+          <article class="feature-card"><div class="num">03</div><h3>维修过程留痕</h3><p>问题描述、处理方案、配件使用、检查记录与维修前后照片集中归集，形成现场处置凭据。</p></article>
+          <article class="feature-card"><div class="num">04</div><h3>电子签名与盖章</h3><p>支持维修人员和管理员手写签名，签名与工单状态联动，并可叠加印章生成正式报告。</p></article>
+          <article class="feature-card"><div class="num">05</div><h3>统计与周报能力</h3><p>按权限范围汇总检查完成、异常发现与用户诉求，支持生成周期性工作总结与档案导出。</p></article>
+          <article class="feature-card"><div class="num">06</div><h3>分级组织权限</h3><p>支持市级、区县、供电所与维修人员的差异化数据范围控制，前后端共同保障访问边界。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="security">
+      <div class="wrap security-grid">
+        <div>
+          <p class="kicker">数据边界与可信处理</p><h2>让信息流动，也让权限始终在线</h2>
+          <div class="check-list">
+            <div>JWT 认证保护接口访问，区分管理人员与现场维修人员身份。</div>
+            <div>市级、区县、供电所分级管辖；地图、工单、统计、导出与档案按组织范围过滤。</div>
+            <div>客户档案导出提供地址脱敏与安全字段处理，兼顾业务查看与信息保护。</div>
+            <div>已归档内容关联工单、签名、照片与报告，便于后续查询和复盘。</div>
+          </div>
+        </div>
+        <aside class="scope-card" aria-label="权限范围层级">
+          <h3>权限随组织边界收敛</h3>
+          <div class="scope-row"><b>市级管理员</b><span>全市视图与全局统计</span></div>
+          <div class="scope-row"><b>区县管理员</b><span>已授权区县范围切换</span></div>
+          <div class="scope-row"><b>供电所管理员</b><span>本所设备、人员与工单</span></div>
+          <div class="scope-row"><b>维修人员</b><span>本人任务与现场作业</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <div class="wrap">
+        <div class="section-head"><p class="kicker">技术实现</p><h2>双端协同，服务端承接核心业务</h2><p>项目采用微信小程序与 Vue 3 管理后台双入口，Flask API 统一承接认证、调度、工单、签名、文档与统计等服务能力。</p></div>
+        <div class="architecture" aria-label="系统技术架构">
+          <div class="arch-col">
+            <div class="arch-node"><b>微信小程序</b><small>扫码签到、定位、维修表单、电子签名、历史记录</small></div>
+            <div class="arch-node"><b>Web 管理后台</b><small>Vue 3 + Vite；地图总览、故障派单、审核、统计与档案</small></div>
+          </div>
+          <div class="arch-core"><div><strong>Flask 业务服务层</strong><span>认证鉴权 · 二维码点位 · 签到校验 · 智能派单 · 工单流转 · 签名盖章 · Word 报告 · 数据统计</span></div></div>
+          <div class="arch-col">
+            <div class="arch-node"><b>业务服务</b><small>调度服务、二维码服务、文档服务、签名服务、报表服务</small></div>
+            <div class="arch-node"><b>数据与文件</b><small>SQLite；现场照片、二维码、签名图片、维修文档与内部档案</small></div>
+          </div>
+        </div>
+        <p class="arch-hint">集成能力包含 JWT、腾讯地图与位置服务、二维码生成、Pillow 图像处理、python-docx 文档生成。</p>
+        <div class="tech-grid" style="margin-top: 24px;">
+          <article class="tech-card"><h3>现场端</h3><p>适配移动现场操作，缩短从到场到填报的路径。</p><div class="tag-list"><span class="tag">微信小程序</span><span class="tag">定位</span><span class="tag">扫码</span></div></article>
+          <article class="tech-card"><h3>管理端</h3><p>面向调度与审核的统一工作台，支持组织范围内的业务管理。</p><div class="tag-list"><span class="tag">Vue 3</span><span class="tag">Vite</span><span class="tag">地图可视化</span></div></article>
+          <article class="tech-card"><h3>服务端</h3><p>以清晰的 API 与服务层承载核心业务规则和流程状态。</p><div class="tag-list"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">JWT</span></div></article>
+          <article class="tech-card"><h3>业务资产</h3><p>让照片、签名、报告和档案成为可回查的流程成果。</p><div class="tag-list"><span class="tag">SQLite</span><span class="tag">python-docx</span><span class="tag">Pillow</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shots" id="screenshots">
+      <div class="wrap">
+        <div class="section-head"><p class="kicker">界面展示</p><h2>Web 管理端与小程序端，沿真实业务流程逐步呈现</h2><p>请选择终端，通过左右按钮查看功能页面；每张截图下方均配有当前环节的实现说明。</p></div>
+        <p class="shot-note"><strong>重要说明：</strong>所有截图中的业务数值、人员、工单、地址及统计结果均为测试/演示数据，不代表真实生产经营情况；涉及的公开数据已经获得公司允许使用。</p>
+        <div class="demo-tabs" role="tablist" aria-label="终端选择">
+          <button class="demo-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="web-demo" data-target="web-demo">Web 管理端</button>
+          <button class="demo-tab" type="button" role="tab" aria-selected="false" aria-controls="mini-demo" data-target="mini-demo">微信小程序端</button>
+        </div>
+        <div class="demo-panel is-active" id="web-demo" data-platform="web" role="tabpanel">
+          <div class="demo-stage">
+            <div class="demo-visual">
+              <button class="slide-arrow prev" type="button" aria-label="查看上一张 Web 管理端截图">‹</button>
+              <img src="screenshots/web/01-login.png" alt="Web 管理端登录界面" data-slide-image>
+              <button class="slide-arrow next" type="button" aria-label="查看下一张 Web 管理端截图">›</button>
+            </div>
+            <aside class="demo-info">
+              <p class="demo-count" data-slide-count>WEB 管理端 · 01 / 08</p>
+              <h3 data-slide-title>后台管理登录</h3>
+              <p data-slide-description>管理员通过统一登录入口进入管理工作台，系统基于账号身份加载对应的数据管辖范围与功能权限。</p>
+              <div class="demo-points" data-slide-points><div>统一身份认证与角色识别</div><div>登录后按市级、区县或供电所范围加载数据</div></div>
+              <div class="demo-progress" aria-label="Web 管理端流程进度" data-slide-progress></div>
+            </aside>
+          </div>
+        </div>
+        <div class="demo-panel" id="mini-demo" data-platform="mini" role="tabpanel" hidden>
+          <div class="demo-stage">
+            <div class="demo-visual">
+              <button class="slide-arrow prev" type="button" aria-label="查看上一张小程序端截图">‹</button>
+              <img src="screenshots/mini/01-login.png" alt="小程序端登录界面" data-slide-image>
+              <button class="slide-arrow next" type="button" aria-label="查看下一张小程序端截图">›</button>
+            </div>
+            <aside class="demo-info">
+              <p class="demo-count" data-slide-count>微信小程序端 · 01 / 05</p>
+              <h3 data-slide-title>移动端登录</h3>
+              <p data-slide-description>维修人员使用手机号和密码登录小程序，确认用户服务协议与隐私政策后进入现场维修工作台。</p>
+              <div class="demo-points" data-slide-points><div>身份登录后仅展示当前账号可操作的任务</div><div>形成从后台派单到现场执行的移动端入口</div></div>
+              <div class="demo-progress" aria-label="微信小程序端流程进度" data-slide-progress></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap"><h2>让设备运维从“经验驱动”，走向“流程驱动、数据可追溯”</h2><p>电力运维维修管理系统以现场闭环为核心，把管理要求转化为可落地的数字化作业路径。</p></div>
+    </section>
+  </main>
+  <footer>电力运维维修管理系统 · 项目介绍页面 · 创建者：麻亚娴 · 截图数据说明以本页公示内容为准</footer>
+  <script>
+    const sections = [...document.querySelectorAll('main > section[id]')];
+    const links = [...document.querySelectorAll('nav a')];
+    const setActiveLink = () => {
+      const current = sections.reduce((active, section) => (
+        section.getBoundingClientRect().top <= 140 ? section : active
+      ), sections[0]);
+      links.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${current.id}`));
+    };
+    window.addEventListener('scroll', setActiveLink, { passive: true });
+    setActiveLink();
+
+    const demoFlows = {
+      web: [
+        {
+          image: 'screenshots/web/01-login.png',
+          alt: 'Web 管理端登录界面',
+          title: '后台管理登录',
+          description: '管理员通过统一登录入口进入管理工作台，系统基于账号身份加载对应的数据管辖范围与功能权限。',
+          points: ['统一身份认证与角色识别', '登录后按市级、区县或供电所范围加载数据']
+        },
+        {
+          image: 'screenshots/web/02-map-overview.png',
+          alt: 'Web 管理端地图总览界面',
+          title: '地图总览与现场态势',
+          description: '登录后首先进入全局态势视图，集中展示设备点位、故障状态、在岗维修人员及当前关联工单。',
+          points: ['按点位状态与人员在线状态进行地图化呈现', '从点位可直接查看故障与工单关联信息']
+        },
+        {
+          image: 'screenshots/web/03-fault-dispatch.png',
+          alt: 'Web 管理端故障派单界面',
+          title: '故障创建与智能派单',
+          description: '关联故障点位后登记故障等级和现场说明，系统结合人员在线状态、定位与在办量辅助派单。',
+          points: ['支持高、中、低等级故障登记', '优先筛选满足条件的同范围维修人员']
+        },
+        {
+          image: 'screenshots/web/04-repair-records.png',
+          alt: 'Web 管理端维修记录界面',
+          title: '维修记录回溯与审核',
+          description: '完成的维修任务沉淀为可检索记录，支持按人员、设备、时间和工单状态进行筛选查看。',
+          points: ['查询完整处置历史与工单详情', '为审核、签章、归档和后续复盘提供依据']
+        },
+        {
+          image: 'screenshots/web/05-qrcode-points.png',
+          alt: 'Web 管理端新增点位二维码界面',
+          title: '设备点位建档与二维码',
+          description: '管理员在地图上选点并维护设备编号、位置、组织归属等信息，建立可扫码识别的设备档案。',
+          points: ['地图选点、地址反查与区县/供电所归属维护', '生成、启停和管理设备专属二维码']
+        },
+        {
+          image: 'screenshots/web/06-admin-accounts.png',
+          alt: 'Web 管理端管理员账号管理界面',
+          title: '管理员账号与权限管理',
+          description: '管理端集中维护市级、区县和供电所管理员账号，明确其审核链路、账号状态与组织管辖范围。',
+          points: ['支持管理员账号审核与启停管理', '账号权限随组织边界逐级收敛']
+        },
+        {
+          image: 'screenshots/web/07-worker-accounts.png',
+          alt: 'Web 管理端维修人员管理界面',
+          title: '维修人员与接单能力管理',
+          description: '管理端集中维护维修人员账号、审核状态、在线状态、定位时间和可派单条件。',
+          points: ['人员信息按组织范围隔离展示', '在派单前核验人员状态与活跃工单']
+        },
+        {
+          image: 'screenshots/web/08-weekly-summary.png',
+          alt: 'Web 管理端周工作总结界面',
+          title: '周期总结与业务统计',
+          description: '系统按授权范围汇总检查完成、问题发现和用户诉求，形成周期工作总结与统计视图。',
+          points: ['支持按日期范围生成工作总结', '统计数据与档案导出均受组织权限控制']
+        }
+      ],
+      mini: [
+        {
+          image: 'screenshots/mini/01-login.png',
+          alt: '小程序端登录界面',
+          title: '移动端登录',
+          description: '维修人员使用手机号和密码登录小程序，确认用户服务协议与隐私政策后进入现场维修工作台。',
+          points: ['身份登录后仅展示当前账号可操作的任务', '形成从后台派单到现场执行的移动端入口']
+        },
+        {
+          image: 'screenshots/mini/02-workbench.jpg',
+          alt: '小程序端维修工作台',
+          title: '维修工作台与待办任务',
+          description: '登录后进入维修工作台，现场人员可管理接单状态、查看待处理工单，并从工作台进入扫码签到或维修记录。',
+          points: ['直观展示当前待处理任务和设备信息', '在线状态为后台派单提供现场人员可用性依据']
+        },
+        {
+          image: 'screenshots/mini/03-checkin.jpg',
+          alt: '小程序端扫码签到界面',
+          title: '扫码签到与到场校验',
+          description: '维修人员扫描设备二维码完成到场签到，系统记录扫码时间、点位信息并结合定位信息进行校验。',
+          points: ['扫码关联设备与待处理工单', '现场签到是后续填写维修表单的前置条件']
+        },
+        {
+          image: 'screenshots/mini/04-records.jpg',
+          alt: '小程序端维修记录界面',
+          title: '我的任务与维修记录',
+          description: '现场人员在移动端集中查看本人任务，按状态追踪待到场、处理中和已完成等工单进度。',
+          points: ['只展示当前账号可处理的工单', '支持按状态筛选并进入工单详情']
+        },
+        {
+          image: 'screenshots/mini/05-long-form.jpg',
+          alt: '小程序端长维修检查表单界面',
+          title: '长维修表单、隐患与整改建议',
+          description: '现场人员按检查标准逐项填报设备运行、用电基础管理、隐患、整改建议与用户诉求；该截图支持在展示窗口内上下滚动查看完整表单。',
+          points: ['覆盖标准检查项、隐患记录和整改建议', '请将鼠标悬停在图片上滚动，或在触屏设备上上下滑动查看全图', '提交后进入管理端审核、签名与报告归档流程'],
+          scrollable: true
+        }
+      ]
+    };
+
+    const demoPanels = [...document.querySelectorAll('.demo-panel')];
+    const demoTabs = [...document.querySelectorAll('.demo-tab')];
+
+    demoPanels.forEach((panel) => {
+      const platform = panel.dataset.platform;
+      const flow = demoFlows[platform];
+      let index = 0;
+      const visual = panel.querySelector('.demo-visual');
+      const image = panel.querySelector('[data-slide-image]');
+      const count = panel.querySelector('[data-slide-count]');
+      const title = panel.querySelector('[data-slide-title]');
+      const description = panel.querySelector('[data-slide-description]');
+      const points = panel.querySelector('[data-slide-points]');
+      const progress = panel.querySelector('[data-slide-progress]');
+      const previous = panel.querySelector('.slide-arrow.prev');
+      const next = panel.querySelector('.slide-arrow.next');
+
+      progress.innerHTML = flow.map((_, step) => `<button type="button" aria-label="查看第 ${step + 1} 张截图"></button>`).join('');
+      const progressButtons = [...progress.querySelectorAll('button')];
+
+      const renderSlide = () => {
+        const item = flow[index];
+        visual.classList.toggle('is-long-image', Boolean(item.scrollable));
+        visual.scrollTop = 0;
+        image.src = item.image;
+        image.alt = item.alt;
+        count.textContent = `${platform === 'web' ? 'WEB 管理端' : '微信小程序端'} · ${String(index + 1).padStart(2, '0')} / ${String(flow.length).padStart(2, '0')}`;
+        title.textContent = item.title;
+        description.textContent = item.description;
+        points.innerHTML = item.points.map((point) => `<div>${point}</div>`).join('');
+        previous.disabled = index === 0;
+        next.disabled = index === flow.length - 1;
+        progressButtons.forEach((button, step) => button.classList.toggle('is-active', step === index));
+      };
+
+      previous.addEventListener('click', () => { if (index > 0) { index -= 1; renderSlide(); } });
+      next.addEventListener('click', () => { if (index < flow.length - 1) { index += 1; renderSlide(); } });
+      progressButtons.forEach((button, step) => button.addEventListener('click', () => { index = step; renderSlide(); }));
+      renderSlide();
+    });
+
+    demoTabs.forEach((tab) => tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+      demoTabs.forEach((item) => {
+        const selected = item === tab;
+        item.classList.toggle('is-active', selected);
+        item.setAttribute('aria-selected', String(selected));
+      });
+      demoPanels.forEach((panel) => {
+        const selected = panel.id === target;
+        panel.classList.toggle('is-active', selected);
+        panel.hidden = !selected;
+      });
+    }));
+  </script>
+</body>
+</html>
